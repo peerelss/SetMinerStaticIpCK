@@ -1,0 +1,190 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SetMinerStaticIpCK.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SetMinerStaticIpCK.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="SetMinerStaticIpCK">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+    <StackPanel Orientation="Vertical" Width="1000" Height="700" Margin="10" Background="LightGray">
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- 左侧设置区域 -->
+            <StackPanel Spacing="8">
+
+                <!-- 网卡选择 -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
+                    <TextBlock Text="网卡选择：" VerticalAlignment="Center" />
+                    <ComboBox Width="250" SelectedIndex="0">
+                        <ComboBoxItem Content="Intel(R) Wi-Fi 6 AX201 160MHz" />
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- IP 设置区域 -->
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <!-- 起始目标IP -->
+                    <StackPanel>
+                        <TextBlock Text="起始目标IP" />
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBox Width="100" Text="192.168.39" />
+                            <TextBlock Text="." VerticalAlignment="Center" />
+                            <TextBox Width="40" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- 子网掩码 -->
+                    <StackPanel>
+                        <TextBlock Text="子网掩码" />
+                        <TextBox Width="100" Text="255.255.255.0" />
+                    </StackPanel>
+
+                    <!-- 网关IP -->
+                    <StackPanel>
+                        <TextBlock Text="网关IP" />
+                        <TextBox Width="100" Text="192.168.39.1" />
+                    </StackPanel>
+
+                    <!-- DNS -->
+                    <StackPanel>
+                        <TextBlock Text="DNS" />
+                        <TextBox Width="100" Text="114.114.114.114" />
+                    </StackPanel>
+
+                    <!-- 本机IP -->
+                    <StackPanel>
+                        <TextBlock Text="本机IP" />
+                        <TextBox Width="120" IsEnabled="False" Text="192.168.39.118" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- 右侧按钮区域 -->
+            <Grid Width="260" HorizontalAlignment="Right" Background="LightGray">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0" Width="100" HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" Content="矿机密码设置" Margin="5" />
+                <Button Grid.Row="0" Grid.Column="1" Width="100" HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" Content="开始监听" Margin="5" />
+                <Button Grid.Row="1" Grid.Column="0" Width="100" HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" Content="跳过" Margin="5" />
+                <Button Grid.Row="1" Grid.Column="1" Width="100" HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" Content="配置IP" Margin="5" />
+            </Grid>
+        </Grid>
+
+
+        <StackPanel Width="900" Height="40" Orientation="Horizontal" Background="Gold">
+            <Button Content="增加一行" Width="160" HorizontalContentAlignment="Center" />
+            <Button Content="删除一行" Width="160" HorizontalContentAlignment="Center" />
+        </StackPanel>
+        <StackPanel Width="900" Height="500" Orientation="Vertical" Background="DarkOliveGreen">
+            <DataGrid Margin="20" ItemsSource="{Binding MinerIpList}"
+                      IsReadOnly="False"
+                      CanUserResizeColumns="True">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="120" Header="行号">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding LineNo}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="120" Header="当前ip">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CurrentIp}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="120" Header="MAC地址">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MaCAddress}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>    <DataGridTemplateColumn Width="120" Header="目标IP">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TargetIp}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>    <DataGridTemplateColumn Width="120" Header="设置状态">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SetStatus}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>    <DataGridTemplateColumn Width="120" Header="矿机机型">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MinerMode}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                   
+                   
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- 左侧：全选 + 重启软件 -->
+            <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                <CheckBox Content="全选" />
+                <Button Content="重启软件" Width="80" HorizontalContentAlignment="Center" />
+            </StackPanel>
+
+            <!-- 右侧：导入 导出 -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                <Button Content="导入" Width="60" HorizontalContentAlignment="Center" />
+                <Button Content="导出" Width="60" HorizontalContentAlignment="Center" />
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+
+</Window>
