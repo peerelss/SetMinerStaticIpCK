@@ -7,7 +7,7 @@
         x:Class="SetMinerStaticIpCK.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="SetMinerStaticIpCK">
+        Title="蚂蚁矿机设置静态ip">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -84,7 +84,7 @@
                 <Button Grid.Row="0" Grid.Column="0" Width="100" HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center" Content="矿机密码设置" Margin="5" />
                 <Button Grid.Row="0" Grid.Column="1" Width="100" HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center" Content="开始监听" Margin="5" />
+                        VerticalContentAlignment="Center" Content="开始监听" Margin="5"  Click="OnStartListening" />
                 <Button Grid.Row="1" Grid.Column="0" Width="100" HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center" Content="跳过" Margin="5" />
                 <Button Grid.Row="1" Grid.Column="1" Width="100" HorizontalContentAlignment="Center"
@@ -98,72 +98,79 @@
             <Button Content="删除一行" Width="160" HorizontalContentAlignment="Center" />
         </StackPanel>
         <StackPanel Width="900" Height="500" Orientation="Vertical" Background="DarkOliveGreen">
-            <DataGrid Margin="20" ItemsSource="{Binding MinerIpList}"
-                      IsReadOnly="False"
-                      CanUserResizeColumns="True">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="120" Header="行号">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding LineNo}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           TextAlignment="Center" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="120" Header="当前ip">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding CurrentIp}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           TextAlignment="Center" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="120" Header="MAC地址">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding MaCAddress}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           TextAlignment="Center" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>    <DataGridTemplateColumn Width="120" Header="目标IP">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding TargetIp}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           TextAlignment="Center" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>    <DataGridTemplateColumn Width="120" Header="设置状态">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding SetStatus}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           TextAlignment="Center" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>    <DataGridTemplateColumn Width="120" Header="矿机机型">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding MinerMode}"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           TextAlignment="Center" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                   
-                   
+            <TextBlock Name="StatusText"  FontFamily="Consolas" FontSize="14" TextWrapping="Wrap" />
+            <ScrollViewer>
 
-                </DataGrid.Columns>
-            </DataGrid>
+                <DataGrid Margin="20" ItemsSource="{Binding MinerIpList}"
+                          IsReadOnly="False"
+                          CanUserResizeColumns="True">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="100" Header="行号">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LineNo}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="120" Header="当前ip">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CurrentIp}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="220" Header="MAC地址">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding MaCAddress}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="120" Header="目标IP">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TargetIp}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="120" Header="设置状态">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding SetStatus}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="120" Header="矿机机型">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding MinerMode}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               TextAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+
         </StackPanel>
 
         <Grid Margin="10">
