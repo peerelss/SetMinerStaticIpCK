@@ -84,7 +84,7 @@
                 <Button Grid.Row="0" Grid.Column="0" Width="100" HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center" Content="矿机密码设置" Margin="5" />
                 <Button Grid.Row="0" Grid.Column="1" Width="100" HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center" Content="开始监听" Margin="5"  Click="OnStartListening" />
+                        VerticalContentAlignment="Center" Content="开始监听" Margin="5" />
                 <Button Grid.Row="1" Grid.Column="0" Width="100" HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center" Content="跳过" Margin="5" />
                 <Button Grid.Row="1" Grid.Column="1" Width="100" HorizontalContentAlignment="Center"
@@ -96,75 +96,28 @@
         <StackPanel Width="900" Height="40" Orientation="Horizontal" Background="Gold">
             <Button Content="增加一行" Width="160" HorizontalContentAlignment="Center" />
             <Button Content="删除一行" Width="160" HorizontalContentAlignment="Center" />
+            <TextBox AcceptsReturn="True"
+                     Text="{Binding Description}"
+                     Watermark="Enter a description" />
+            <Button Command="{Binding ButtonAction}">更改</Button>
+            <Button Content="保存并输出"
+                    Command="{Binding SaveCommand}" />
+            <Button Content="启动UDP监听" Command="{Binding StartUdpCommand}" />
         </StackPanel>
         <StackPanel Width="900" Height="500" Orientation="Vertical" Background="DarkOliveGreen">
-            <TextBlock Name="StatusText"  FontFamily="Consolas" FontSize="14" TextWrapping="Wrap" />
+            <TextBlock Name="StatusText" FontFamily="Consolas" FontSize="14" TextWrapping="Wrap" />
             <ScrollViewer>
 
                 <DataGrid Margin="20" ItemsSource="{Binding MinerIpList}"
                           IsReadOnly="False"
                           CanUserResizeColumns="True">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="100" Header="行号">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding LineNo}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="120" Header="当前ip">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding CurrentIp}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="220" Header="MAC地址">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding MaCAddress}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="120" Header="目标IP">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding TargetIp}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="120" Header="设置状态">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding SetStatus}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="120" Header="矿机机型">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding MinerMode}"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               TextAlignment="Center" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="编号" Binding="{Binding LineNo}" />
+                        <DataGridTextColumn Header="当前ip" Binding="{Binding CurrentIp}" />
+                        <DataGridTextColumn Header="MAC" Binding="{Binding MaCAddress}" />
+                        <DataGridTextColumn Header="目标ip" Binding="{Binding TargetIp}" />
+                        <DataGridTextColumn Header="状态" Binding="{Binding SetStatus}" />
+                        <DataGridTextColumn Header="类型" Binding="{Binding MinerMode}" />
 
 
                     </DataGrid.Columns>
